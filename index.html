@@ -1,383 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>makeNow - AI Recipe Generator</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-            rel="stylesheet" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        <link rel="stylesheet" href="styles.css" />
-        <link rel="shortcut icon" href="cooking.png" type="image/x-icon" />
-    </head>
-    <body>
-        <!-- Name Input Modal -->
-        <div class="modal-overlay" id="nameModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <div class="modal-icon">
-                        <i class="fas fa-chef-hat"></i>
-                    </div>
-                    <h2>Welcome to makeNow</h2>
-                    <p>Let's personalize your culinary journey</p>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <input
-                            type="text"
-                            class="modal-input"
-                            id="nameInput"
-                            placeholder="Enter your name"
-                            maxlength="30" />
-                        <div class="input-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                    <button class="btn-primary" id="submitName">
-                        <span>Start Cooking</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>makeNow - AI Recipe Generator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="assets/cooking.png" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- Name Input Modal -->
+    <div class="modal-overlay" id="nameModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-icon">
+            <i class="fas fa-chef-hat"></i>
+          </div>
+          <h2>Welcome to makeNow</h2>
+          <p>Let's personalize your culinary journey</p>
         </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <input
+              type="text"
+              class="modal-input"
+              id="nameInput"
+              placeholder="Enter your name"
+              maxlength="30" />
+            <div class="input-icon">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <button class="btn-primary" id="submitName">
+            <span>Start Cooking</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
-        <!-- Navigation Header -->
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-brand">
-                    <i class="fas fa-utensils brand-icon"></i>
-                    <span class="brand-text">makeNow</span>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <i class="fas fa-utensils brand-icon"></i>
+          <span class="brand-text">makeNow</span>
+        </div>
+        <div class="nav-greeting">
+          <span class="greeting-text" id="greetingText">Welcome back!</span>
+          <button class="profile-btn" id="profileBtn">
+            <i class="fas fa-user-circle"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="hero-content">
+            <h1 class="hero-title">What's in your kitchen today?</h1>
+            <p class="hero-subtitle">
+              Transform your ingredients into amazing recipes with AI magic ✨
+            </p>
+          </div>
+        </section>
+
+        <!-- Input Section -->
+        <section class="input-section">
+          <div class="section-header">
+            <h2 class="section-title">Add Your Ingredients</h2>
+            <p class="section-subtitle">Choose your preferred input method</p>
+          </div>
+
+          <!-- Input Method Toggle -->
+          <div class="input-toggle">
+            <button class="toggle-btn active" id="textToggle">
+              <i class="fas fa-keyboard"></i>
+              <span>Type</span>
+            </button>
+            <button class="toggle-btn" id="imageToggle">
+              <i class="fas fa-camera"></i>
+              <span>Photo</span>
+            </button>
+          </div>
+
+          <!-- Input Areas -->
+          <div class="input-container">
+            <!-- Text Input -->
+            <div class="input-area active" id="textInputArea">
+              <div class="textarea-container">
+                <textarea
+                  class="ingredient-input"
+                  id="ingredientTextarea"
+                  placeholder="Enter ingredients separated by commas (e.g., chicken, rice, tomatoes, onions)"
+                  maxlength="500"></textarea>
+                <div class="input-footer">
+                  <span class="char-count" id="charCount">0/500</span>
+                  <button class="clear-btn" id="clearText">
+                    <i class="fas fa-times"></i>
+                  </button>
                 </div>
-                <div class="nav-greeting">
-                    <span class="greeting-text" id="greetingText"
-                        >Welcome back!</span
-                    >
-                    <button class="profile-btn" id="profileBtn">
-                        <i class="fas fa-user-circle"></i>
+              </div>
+            </div>
+
+            <!-- Image Input -->
+            <div class="input-area" id="imageInputArea">
+              <div class="upload-container">
+                <div class="upload-zone" id="uploadZone">
+                  <div class="upload-content">
+                    <div class="upload-icon">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drop your image here</h3>
+                    <p>
+                      or
+                      <span class="upload-link">browse files</span>
+                    </p>
+                    <div class="upload-formats">JPG, PNG, WEBP • Max 5MB</div>
+                  </div>
+                  <input type="file" id="imageInput" accept="image/*" hidden />
+                </div>
+                <div
+                  class="image-preview"
+                  id="imagePreview"
+                  style="display: none">
+                  <div class="preview-header">
+                    <span>Uploaded Image</span>
+                    <button class="remove-image" id="removeImage">
+                      <i class="fas fa-times"></i>
                     </button>
+                  </div>
+                  <img id="previewImg" alt="Uploaded ingredients" />
+                  <div class="ocr-result" id="ocrResult" style="display: none">
+                    <h4>Detected Ingredients:</h4>
+                    <div class="detected-text" id="detectedText"></div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </nav>
+          </div>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="container">
-                <!-- Hero Section -->
-                <section class="hero-section">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            What's in your kitchen today?
-                        </h1>
-                        <p class="hero-subtitle">
-                            Transform your ingredients into amazing recipes with
-                            AI magic ✨
-                        </p>
-                    </div>
-                </section>
-
-                <!-- Input Section -->
-                <section class="input-section">
-                    <div class="section-header">
-                        <h2 class="section-title">Add Your Ingredients</h2>
-                        <p class="section-subtitle">
-                            Choose your preferred input method
-                        </p>
-                    </div>
-
-                    <!-- Input Method Toggle -->
-                    <div class="input-toggle">
-                        <button class="toggle-btn active" id="textToggle">
-                            <i class="fas fa-keyboard"></i>
-                            <span>Type</span>
-                        </button>
-                        <button class="toggle-btn" id="imageToggle">
-                            <i class="fas fa-camera"></i>
-                            <span>Photo</span>
-                        </button>
-                    </div>
-
-                    <!-- Input Areas -->
-                    <div class="input-container">
-                        <!-- Text Input -->
-                        <div class="input-area active" id="textInputArea">
-                            <div class="textarea-container">
-                                <textarea
-                                    class="ingredient-input"
-                                    id="ingredientTextarea"
-                                    placeholder="Enter ingredients separated by commas (e.g., chicken, rice, tomatoes, onions)"
-                                    maxlength="500"></textarea>
-                                <div class="input-footer">
-                                    <span class="char-count" id="charCount"
-                                        >0/500</span
-                                    >
-                                    <button class="clear-btn" id="clearText">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Image Input -->
-                        <div class="input-area" id="imageInputArea">
-                            <div class="upload-container">
-                                <div class="upload-zone" id="uploadZone">
-                                    <div class="upload-content">
-                                        <div class="upload-icon">
-                                            <i
-                                                class="fas fa-cloud-upload-alt"></i>
-                                        </div>
-                                        <h3>Drop your image here</h3>
-                                        <p>
-                                            or
-                                            <span class="upload-link"
-                                                >browse files</span
-                                            >
-                                        </p>
-                                        <div class="upload-formats">
-                                            JPG, PNG, WEBP • Max 5MB
-                                        </div>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        id="imageInput"
-                                        accept="image/*"
-                                        hidden />
-                                </div>
-                                <div
-                                    class="image-preview"
-                                    id="imagePreview"
-                                    style="display: none">
-                                    <div class="preview-header">
-                                        <span>Uploaded Image</span>
-                                        <button
-                                            class="remove-image"
-                                            id="removeImage">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <img
-                                        id="previewImg"
-                                        alt="Uploaded ingredients" />
-                                    <div
-                                        class="ocr-result"
-                                        id="ocrResult"
-                                        style="display: none">
-                                        <h4>Detected Ingredients:</h4>
-                                        <div
-                                            class="detected-text"
-                                            id="detectedText"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Dietary Filters -->
-                    <div class="filters-section">
-                        <div class="filter-header">
-                            <h3>Dietary Preferences</h3>
-                            <span class="filter-badge" id="filterBadge"
-                                >None Selected</span
-                            >
-                        </div>
-                        <div class="filter-grid">
-                            <button
-                                class="filter-option active"
-                                data-filter="none">
-                                <i class="fas fa-utensils"></i>
-                                <span>No Restrictions</span>
-                            </button>
-                            <button
-                                class="filter-option"
-                                data-filter="vegetarian">
-                                <i class="fas fa-leaf"></i>
-                                <span>Vegetarian</span>
-                            </button>
-                            <button class="filter-option" data-filter="vegan">
-                                <i class="fas fa-seedling"></i>
-                                <span>Vegan</span>
-                            </button>
-                            <button class="filter-option" data-filter="keto">
-                                <i class="fas fa-fire"></i>
-                                <span>Keto</span>
-                            </button>
-                            <button
-                                class="filter-option"
-                                data-filter="gluten-free">
-                                <i class="fas fa-wheat"></i>
-                                <span>Gluten-Free</span>
-                            </button>
-                            <button
-                                class="filter-option"
-                                data-filter="dairy-free">
-                                <i class="fas fa-ban"></i>
-                                <span>Dairy-Free</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Generate Button -->
-                    <div class="generate-section">
-                        <button class="btn-generate" id="generateBtn" disabled>
-                            <div class="btn-content">
-                                <i class="fas fa-magic"></i>
-                                <span>Generate Recipe</span>
-                            </div>
-                            <div class="btn-loading" style="display: none">
-                                <div class="spinner"></div>
-                                <span>Creating...</span>
-                            </div>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Recipe Display Section -->
-                <section
-                    class="recipe-section"
-                    id="recipeSection"
-                    style="display: none">
-                    <div class="recipe-header">
-                        <div class="recipe-status">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Recipe Generated Successfully!</span>
-                        </div>
-                        <h2 class="recipe-title" id="recipeTitle">
-                            Delicious Homemade Creation
-                        </h2>
-                        <div class="recipe-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-clock"></i>
-                                <div class="meta-content">
-                                    <span class="meta-label">Prep Time</span>
-                                    <span class="meta-value" id="prepTime"
-                                        >15 mins</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-fire"></i>
-                                <div class="meta-content">
-                                    <span class="meta-label">Cook Time</span>
-                                    <span class="meta-value" id="cookTime"
-                                        >30 mins</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-users"></i>
-                                <div class="meta-content">
-                                    <span class="meta-label">Serves</span>
-                                    <span class="meta-value" id="servings"
-                                        >4 people</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-signal"></i>
-                                <div class="meta-content">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="meta-value" id="difficulty"
-                                        >Medium</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="recipe-content">
-                        <div class="recipe-grid">
-                            <!-- Ingredients Panel -->
-                            <div class="ingredients-panel">
-                                <div class="panel-header">
-                                    <h3>
-                                        <i class="fas fa-list-ul"></i>
-                                        Ingredients
-                                    </h3>
-                                    <button
-                                        class="panel-toggle"
-                                        id="ingredientsToggle">
-                                        <i class="fas fa-chevron-up"></i>
-                                    </button>
-                                </div>
-                                <div class="panel-content">
-                                    <ul
-                                        class="ingredients-list"
-                                        id="ingredientsList">
-                                        <!-- Populated by JavaScript -->
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Instructions Panel -->
-                            <div class="instructions-panel">
-                                <div class="panel-header">
-                                    <h3>
-                                        <i class="fas fa-list-ol"></i>
-                                        Instructions
-                                    </h3>
-                                    <button
-                                        class="panel-toggle"
-                                        id="instructionsToggle">
-                                        <i class="fas fa-chevron-up"></i>
-                                    </button>
-                                </div>
-                                <div class="panel-content">
-                                    <div
-                                        class="instructions-list"
-                                        id="instructionsList">
-                                        <!-- Populated by JavaScript -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recipe Actions -->
-                        <div class="recipe-actions">
-                            <button
-                                class="action-btn secondary"
-                                id="regenerateBtn">
-                                <i class="fas fa-sync-alt"></i>
-                                <span>Try Another Recipe</span>
-                            </button>
-                            <button
-                                class="action-btn primary"
-                                id="saveAsPdfBtn">
-                                <i class="fas fa-download"></i>
-                                <span>Save as PDF</span>
-                            </button>
-                            <button class="action-btn secondary" id="shareBtn">
-                                <i class="fas fa-share-alt"></i>
-                                <span>Share Recipe</span>
-                            </button>
-                        </div>
-                    </div>
-                </section>
+          <!-- Dietary Filters -->
+          <div class="filters-section">
+            <div class="filter-header">
+              <h3>Dietary Preferences</h3>
+              <span class="filter-badge" id="filterBadge">None Selected</span>
             </div>
-        </main>
+            <div class="filter-grid">
+              <button class="filter-option active" data-filter="none">
+                <i class="fas fa-utensils"></i>
+                <span>No Restrictions</span>
+              </button>
+              <button class="filter-option" data-filter="vegetarian">
+                <i class="fas fa-leaf"></i>
+                <span>Vegetarian</span>
+              </button>
+              <button class="filter-option" data-filter="vegan">
+                <i class="fas fa-seedling"></i>
+                <span>Vegan</span>
+              </button>
+              <button class="filter-option" data-filter="keto">
+                <i class="fas fa-fire"></i>
+                <span>Keto</span>
+              </button>
+              <button class="filter-option" data-filter="gluten-free">
+                <i class="fas fa-wheat"></i>
+                <span>Gluten-Free</span>
+              </button>
+              <button class="filter-option" data-filter="dairy-free">
+                <i class="fas fa-ban"></i>
+                <span>Dairy-Free</span>
+              </button>
+            </div>
+          </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-brand">
-                        <i class="fas fa-utensils"></i>
-                        <span>makeNow</span>
-                    </div>
-                    <div class="footer-text">
-                        Crafted with ❤️ by Shiva Sareddy for food lovers
-                        everywhere
-                    </div>
+          <!-- Generate Button -->
+          <div class="generate-section">
+            <button class="btn-generate" id="generateBtn" disabled>
+              <div class="btn-content">
+                <i class="fas fa-magic"></i>
+                <span>Generate Recipe</span>
+              </div>
+              <div class="btn-loading" style="display: none">
+                <div class="spinner"></div>
+                <span>Creating...</span>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- Recipe Display Section -->
+        <section
+          class="recipe-section"
+          id="recipeSection"
+          style="display: none">
+          <div class="recipe-header">
+            <div class="recipe-status">
+              <i class="fas fa-check-circle"></i>
+              <span>Recipe Generated Successfully!</span>
+            </div>
+            <h2 class="recipe-title" id="recipeTitle">
+              Delicious Homemade Creation
+            </h2>
+            <div class="recipe-meta">
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <div class="meta-content">
+                  <span class="meta-label">Prep Time</span>
+                  <span class="meta-value" id="prepTime">15 mins</span>
                 </div>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-fire"></i>
+                <div class="meta-content">
+                  <span class="meta-label">Cook Time</span>
+                  <span class="meta-value" id="cookTime">30 mins</span>
+                </div>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-users"></i>
+                <div class="meta-content">
+                  <span class="meta-label">Serves</span>
+                  <span class="meta-value" id="servings">4 people</span>
+                </div>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-signal"></i>
+                <div class="meta-content">
+                  <span class="meta-label">Difficulty</span>
+                  <span class="meta-value" id="difficulty">Medium</span>
+                </div>
+              </div>
             </div>
-        </footer>
+          </div>
 
-        <!-- Toast Notifications -->
-        <div class="toast-container" id="toastContainer"></div>
+          <div class="recipe-content">
+            <div class="recipe-grid">
+              <!-- Ingredients Panel -->
+              <div class="ingredients-panel">
+                <div class="panel-header">
+                  <h3>
+                    <i class="fas fa-list-ul"></i>
+                    Ingredients
+                  </h3>
+                  <button class="panel-toggle" id="ingredientsToggle">
+                    <i class="fas fa-chevron-up"></i>
+                  </button>
+                </div>
+                <div class="panel-content">
+                  <ul class="ingredients-list" id="ingredientsList">
+                    <!-- Populated by JavaScript -->
+                  </ul>
+                </div>
+              </div>
 
-        <!-- Scripts -->
-        <script src="script.js"></script>
-    </body>
+              <!-- Instructions Panel -->
+              <div class="instructions-panel">
+                <div class="panel-header">
+                  <h3>
+                    <i class="fas fa-list-ol"></i>
+                    Instructions
+                  </h3>
+                  <button class="panel-toggle" id="instructionsToggle">
+                    <i class="fas fa-chevron-up"></i>
+                  </button>
+                </div>
+                <div class="panel-content">
+                  <div class="instructions-list" id="instructionsList">
+                    <!-- Populated by JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe Actions -->
+            <div class="recipe-actions">
+              <button class="action-btn secondary" id="regenerateBtn">
+                <i class="fas fa-sync-alt"></i>
+                <span>Try Another Recipe</span>
+              </button>
+              <button class="action-btn primary" id="saveAsPdfBtn">
+                <i class="fas fa-download"></i>
+                <span>Save as PDF</span>
+              </button>
+              <button class="action-btn secondary" id="shareBtn">
+                <i class="fas fa-share-alt"></i>
+                <span>Share Recipe</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <i class="fas fa-utensils"></i>
+            <span>makeNow</span>
+          </div>
+          <div class="footer-text">
+            Crafted with ❤️ by Shiva Sareddy for food lovers everywhere
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+  </body>
 </html>
