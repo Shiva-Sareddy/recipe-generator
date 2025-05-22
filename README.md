@@ -36,7 +36,7 @@ A fun and interactive AI-powered web app that helps you cook with what you have 
 3. Add your AI API key in the JavaScript file if required.
 
 ## 📸 Demo
-<img src="assets/recipe-makeNow.jpg" alt="Recipe Generator Demo" width="600" />
+<img src="assets/recipe-makeNow.png" alt="Recipe Generator Demo" width="600" />
 
 ## 📌 Notes
 All user data (like name and preferences) is stored using localStorage
